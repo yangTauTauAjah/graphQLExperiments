@@ -1,10 +1,13 @@
 const express = require("express");
 const { createHandler } = require('graphql-http/lib/use/express')
-const { GraphQLSchema, GraphQLObjectType, GraphQLString } = require("graphql");
 const fs = require('fs');
 const path = require("path");
+const { schema } = require('./graphql')
 const app = express();
 const PORT = 3000;
+
+
+
 
 
 
@@ -13,18 +16,6 @@ let page = fs.readFileSync(path.join(__dirname, '/graphiql.html'), 'utf-8')
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
-
-const schema = new GraphQLSchema({
-  query: new GraphQLObjectType({
-    name: "test",
-    fields: () => ({
-      msg: {
-        type: GraphQLString,
-        resolve: () => "Hello world",
-      },
-    }),
-  }),
-});
 
 /* app.use((req, res, next) => {
   console.log(`${req.method} ${req.url}`)

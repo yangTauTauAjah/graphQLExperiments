@@ -62,7 +62,7 @@ const userType = new GraphQLObjectType({
     created_at: {
       type: GraphQLString,
       resolve(obj, arg) {
-        return new Date(Number.parseInt(obj.created_at)).toString();
+        return new Date(Number.parseInt(obj.created_at)).toISOString();
       },
     },
   }),
@@ -87,7 +87,7 @@ const fileType = new GraphQLObjectType({
     created_at: {
       type: GraphQLString,
       resolve(obj, arg) {
-        return new Date(Number.parseInt(obj.created_at)).toString();
+        return new Date(Number.parseInt(obj.created_at)).toISOString();
       },
     },
   }),
@@ -110,7 +110,7 @@ const commentType = new GraphQLObjectType({
     created_at: {
       type: GraphQLString,
       resolve(obj, arg) {
-        return new Date(Number.parseInt(obj.created_at)).toString();
+        return new Date(Number.parseInt(obj.created_at)).toISOString();
       },
     },
   }),

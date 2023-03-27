@@ -4,7 +4,8 @@ const {
   GraphQLID,
   GraphQLInt,
   GraphQLFloat,
-  GraphQLInputObjectType
+  GraphQLInputObjectType,
+  GraphQLEnumType
 } = require("graphql");
 const { mockUserData } = require("./data");
 
@@ -93,11 +94,21 @@ const FloatRangeType = new GraphQLInputObjectType({
   }
 });
 
+const ActionType = new GraphQLEnumType({
+  name: "ActionType",
+  values: {
+    create: { value: "create" },
+    update: { value: "update" },
+    delete: { value: "delete" }
+  }
+})
+
 module.exports = {
   userType,
   fileType,
   commentType,
   DateInputType,
   IntRangeType,
-  FloatRangeType
+  FloatRangeType,
+  ActionType
 };

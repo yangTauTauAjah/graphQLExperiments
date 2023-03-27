@@ -2,15 +2,9 @@ const {
   GraphQLString,
   GraphQLID,
   GraphQLInt,
-  GraphQLFloat,
+  GraphQLFloat
 } = require("graphql");
-const {
-  userType,
-  DateInputType,
-  fileType,
-  commentType,
-  ActionType
-} = require("./dataTypes");
+const { userType, fileType, commentType, ActionType } = require("./dataTypes");
 const { mockUserData, mockFiles, mockComments } = require("./data");
 
 const UserSchema = {
@@ -118,7 +112,7 @@ const FileSchema = {
           throw Error(
             "Please fill out user_id, title, and file_size field to perform Create"
           );
-          
+
         let _ = {
           id: mockFiles.length,
           user_id: Number.parseInt(user_id),
@@ -183,7 +177,7 @@ const CommentSchema = {
           throw Error(
             "Please fill out user_id and comment field to perform Create"
           );
-          
+
         let _ = {
           comment_id: mockComments.length,
           user_id: Number.parseInt(user_id),

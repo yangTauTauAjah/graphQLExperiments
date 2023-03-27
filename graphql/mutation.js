@@ -55,7 +55,7 @@ const UserSchema = {
             "Please fill out username and email field to perform Create"
           );
         let _ = {
-          id: mockUserData.length,
+          id: mockUserData.length + 1,
           username,
           email,
           created_at: Date.now().toString()
@@ -122,7 +122,7 @@ const FileSchema = {
           );
 
         let _ = {
-          id: mockFiles.length,
+          id: mockFiles.length + 1,
           user_id: Number.parseInt(user_id),
           title,
           tag: tag || null,
@@ -190,7 +190,7 @@ const CommentSchema = {
           );
 
         let _ = {
-          id: mockComments.length,
+          id: mockComments.length + 1,
           user_id: Number.parseInt(user_id),
           comment,
           likes: likes || 0,

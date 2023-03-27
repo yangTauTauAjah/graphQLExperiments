@@ -79,7 +79,9 @@ const FileSchema = {
     user_id: { type: GraphQLID },
     title: { type: GraphQLString },
     tag: { type: GraphQLString },
-    file_size: { type: GraphQLFloat }
+    file_size: { type: GraphQLFloat },
+    likes: { type: GraphQLInt },
+    dislikes: { type: GraphQLInt }
   },
   resolve(obj, args) {
     const { action, file_id, user_id, title, tag, file_size, likes, dislikes } = args;
@@ -146,7 +148,9 @@ const CommentSchema = {
     },
     comment_id: { type: GraphQLID },
     user_id: { type: GraphQLID },
-    comment: { type: GraphQLString }
+    comment: { type: GraphQLString },
+    likes: { type: GraphQLInt },
+    dislikes: { type: GraphQLInt }
   },
   resolve(obj, args) {
     const { action, comment_id, user_id, comment, likes, dislikes } = args;

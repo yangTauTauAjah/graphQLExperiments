@@ -140,55 +140,62 @@ const FileSchema = {
 const CommentSchema = {
   type: commentType,
   args: {
+    action: {
+      type: ActionType,
+      defaultValue: "create"
+    },
     comment_id: { type: GraphQLID },
     user_id: { type: GraphQLID },
-    content: { type: GraphQLString },
+    comment: { type: GraphQLString },
     likes: { type: GraphQLInt },
-    dislikes: { type: GraphQLInt },
-    created_at: { type: DateInputType }
+    dislikes: { type: GraphQLInt }
   },
   resolve(obj, args) {
-    if (args.comment_id)
-      return [mockComments.find((e) => e.id.toString() === args.comment_id)];
-    else if (Object.keys(args) === 0) return mockComments;
+    const { action, comment_id, user_id, comment, likes, dislikes } = args;
 
-    let _ = structuredClone(mockComments);
+    switch (action) {
+      case "update":
+        if (!comment_id?.length)
+          throw Error("Please provide comment_id to perform Update");
 
-    if ((i = args.user_identifier)) {
-      let o =
-        i.search(/\D/) !== -1
-          ? mockUserData.find((e) =>
-              e.username.toLowerCase().includes(i.toLowerCase())
-            )?.id
-          : i;
-      _ = _.filter((e) => e.user_id === Number.parseInt(o));
+        let index = mockComments.findIndex(
+          (e) => e.id === Number.parseInt(comment_id)
+        );
+
+        for (let arg in args) {
+          if (arg === "comment_id") continue;
+          mockComments[index][arg] = args[arg];
+        }
+
+        return mockComments[index];
+
+      case "delete":
+        if (!comment_id?.length)
+          throw Error("Please provide comment_id to perform Delete");
+
+        index = mockComments.findIndex((e) => e.id === comment_id);
+
+        return mockComments.splice(index, 1);
+
+      case "create":
+      default:
+        if (!user_id?.length || !comment?.length)
+          throw Error(
+            "Please fill out user_id and comment field to perform Create"
+          );
+          
+        let _ = {
+          comment_id: mockComments.length,
+          user_id: Number.parseInt(user_id),
+          comment,
+          likes: likes || 0,
+          dislikes: dislikes || 0
+        };
+
+        mockComments.push(_);
+
+        return _;
     }
-
-    if (args.contain)
-      _ = _.filter((e) =>
-        e.comment.toLowerCase().includes(args.contain.toLowerCase())
-      );
-
-    if (args.likes?.min) _ = _.filter((e) => e.likes > args.likes.min);
-
-    if (args.likes?.max) _ = _.filter((e) => e.likes < args.likes.max);
-
-    if (args.dislikes?.min) _ = _.filter((e) => e.dislikes > args.dislikes.min);
-
-    if (args.dislikes?.max) _ = _.filter((e) => e.dislikes < args.dislikes.max);
-
-    if (args.created_at?.before)
-      _ = _.filter(
-        (e) =>
-          Date.parse(args.created_at.before) > Number.parseInt(e.created_at)
-      );
-
-    if (args.created_at?.after)
-      _ = _.filter(
-        (e) => Date.parse(args.created_at.after) < Number.parseInt(e.created_at)
-      );
-
-    return _;
   }
 };
 

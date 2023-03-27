@@ -63,7 +63,7 @@ const commentType = new GraphQLObjectType({
     dislikes: { type: GraphQLInt },
     created_at: {
       type: GraphQLString,
-      resolve(obj, arg) {
+      resolve(obj) {
         return new Date(Number.parseInt(obj.created_at)).toISOString();
       }
     }

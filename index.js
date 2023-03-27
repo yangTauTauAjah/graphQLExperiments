@@ -1,15 +1,10 @@
 const express = require("express");
-const { createHandler } = require('graphql-http/lib/use/express')
-const fs = require('fs');
+const { createHandler } = require("graphql-http/lib/use/express");
+const fs = require("fs");
 const path = require("path");
-const { schema } = require('./graphql')
+const { schema } = require("./graphql");
 const app = express();
 const PORT = 3000;
-
-
-
-
-
 
 let page = fs.readFileSync(path.join(__dirname, '/graphiql.html'), 'utf-8')
 
@@ -54,5 +49,3 @@ app.use(
 app.listen(PORT, () => {
   console.log(`running on port ${PORT}`);
 });
-
-

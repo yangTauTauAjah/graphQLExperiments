@@ -190,11 +190,12 @@ const CommentSchema = {
           );
 
         let _ = {
-          comment_id: mockComments.length,
+          id: mockComments.length,
           user_id: Number.parseInt(user_id),
           comment,
           likes: likes || 0,
-          dislikes: dislikes || 0
+          dislikes: dislikes || 0,
+          created_at: Date.now().toString()
         };
 
         mockComments.push(_);

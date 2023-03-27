@@ -2,16 +2,12 @@ const {
   GraphQLString,
   GraphQLID,
   GraphQLInt,
-  GraphQLList,
-  GraphQLNonNull,
   GraphQLFloat,
 } = require("graphql");
 const {
   userType,
   DateInputType,
   fileType,
-  FloatRangeType,
-  IntRangeType,
   commentType,
   ActionType
 } = require("./dataTypes");

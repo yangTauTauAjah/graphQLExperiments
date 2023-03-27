@@ -20,15 +20,18 @@ const UserSchema = {
   },
   resolve(obj, args) {
     const { action, user_id, username, email } = args;
+    let index
 
     switch (action) {
       case "update":
         if (!user_id?.length && !username?.length)
           throw Error("Please provide user_id to perform Update");
 
-        let index = !user_id
+        index = !user_id
           ? mockUserData.findIndex((e) => e.username === username)
           : mockUserData.findIndex((e) => e.id === Number.parseInt(user_id));
+
+        if (index < 0) throw Error("user_id not found");
 
         for (let arg in args) {
           if (arg === "user_id") continue;
@@ -40,9 +43,10 @@ const UserSchema = {
       case "delete":
         if (!user_id?.length) throw Error("Please provide user_id to perform Delete");
 
-        index = mockUserData.findIndex((e) => e.id === user_id);
+        index = mockUserData.findIndex((e) => e.id === Number.parseInt(user_id));
+        if (index < 0) throw Error("user_id not found");
 
-        return mockUserData.splice(index, 1);
+        return mockUserData.splice(index, 1)[0];
 
       case "create":
       default:
@@ -81,15 +85,18 @@ const FileSchema = {
   },
   resolve(obj, args) {
     const { action, file_id, user_id, title, tag, file_size, likes, dislikes } = args;
+    let index
 
     switch (action) {
       case "update":
         if (!file_id?.length)
           throw Error("Please provide file_id to perform Update");
 
-        let index = mockFiles.findIndex(
+        index = mockFiles.findIndex(
           (e) => e.id === Number.parseInt(file_id)
         );
+
+        if (index < 0) throw Error("file_id not found");
 
         for (let arg in args) {
           if (arg === "file_id") continue;
@@ -102,9 +109,10 @@ const FileSchema = {
         if (!file_id?.length)
           throw Error("Please provide file_id to perform Delete");
 
-        index = mockFiles.findIndex((e) => e.id === file_id);
+        index = mockFiles.findIndex((e) => e.id === Number.parseInt(file_id));
+        if (index < 0) throw Error("file_id not found");
 
-        return mockFiles.splice(index, 1);
+        return mockFiles.splice(index, 1)[0];
 
       case "create":
       default:
@@ -146,15 +154,17 @@ const CommentSchema = {
   },
   resolve(obj, args) {
     const { action, comment_id, user_id, comment, likes, dislikes } = args;
+    let index
 
     switch (action) {
       case "update":
         if (!comment_id?.length)
           throw Error("Please provide comment_id to perform Update");
 
-        let index = mockComments.findIndex(
+        index = mockComments.findIndex(
           (e) => e.id === Number.parseInt(comment_id)
         );
+        if (index < 0) throw Error("comment_id not found");
 
         for (let arg in args) {
           if (arg === "comment_id") continue;
@@ -167,9 +177,10 @@ const CommentSchema = {
         if (!comment_id?.length)
           throw Error("Please provide comment_id to perform Delete");
 
-        index = mockComments.findIndex((e) => e.id === comment_id);
+        index = mockComments.findIndex((e) => e.id === Number.parseInt(comment_id));
+        if (index < 0) throw Error("comment_id not found");
 
-        return mockComments.splice(index, 1);
+        return mockComments.splice(index, 1)[0];
 
       case "create":
       default:

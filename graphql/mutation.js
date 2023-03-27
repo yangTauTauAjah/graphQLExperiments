@@ -23,7 +23,7 @@ const UserSchema = {
 
     switch (action) {
       case "update":
-        if (!user_id && !username.length)
+        if (!user_id?.length && !username?.length)
           throw Error("Please provide user_id to perform Update");
 
         let index = !user_id
@@ -38,7 +38,7 @@ const UserSchema = {
         return mockUserData[index];
 
       case "delete":
-        if (!user_id) throw Error("Please provide user_id to perform Delete");
+        if (!user_id?.length) throw Error("Please provide user_id to perform Delete");
 
         index = mockUserData.findIndex((e) => e.id === user_id);
 
@@ -46,7 +46,7 @@ const UserSchema = {
 
       case "create":
       default:
-        if (!username.length || !email.length)
+        if (!username?.length || !email?.length)
           throw Error(
             "Please fill out username and email field to perform Create"
           );
@@ -80,7 +80,7 @@ const FileSchema = {
     dislikes: { type: GraphQLInt }
   },
   resolve(obj, args) {
-    const { action, user_id, title, tag, file_size, likes, dislikes } = args;
+    const { action, file_id, user_id, title, tag, file_size, likes, dislikes } = args;
 
     switch (action) {
       case "update":
